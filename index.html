@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domine a IA Visual — Crie Imagens, Animações e Vídeos com IA</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --preto: #0a0a0a;
+    --branco: #f8f5f0;
+    --amarelo: #f5c842;
+    --laranja: #e8601a;
+    --cinza: #1c1c1c;
+    --cinza-medio: #2e2e2e;
+    --cinza-claro: #888;
+    --fonte-titulo: 'Syne', sans-serif;
+    --fonte-corpo: 'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--preto);
+    color: var(--branco);
+    font-family: var(--fonte-corpo);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px 60px;
+    position: relative;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, #2a1a00 0%, var(--preto) 60%);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle 600px at 20% 80%, rgba(232,96,26,0.07), transparent),
+                radial-gradient(circle 400px at 80% 20%, rgba(245,200,66,0.06), transparent);
+    pointer-events: none;
+  }
+
+  .badge {
+    display: inline-block;
+    background: rgba(245,200,66,0.12);
+    border: 1px solid rgba(245,200,66,0.3);
+    color: var(--amarelo);
+    font-family: var(--fonte-titulo);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 32px;
+  }
+
+  h1 {
+    font-family: var(--fonte-titulo);
+    font-size: clamp(42px, 7vw, 88px);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    max-width: 900px;
+    margin-bottom: 12px;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--amarelo);
+    display: block;
+  }
+
+  .hero-sub {
+    font-size: clamp(18px, 2.5vw, 22px);
+    color: rgba(248,245,240,0.6);
+    max-width: 600px;
+    margin: 24px auto 48px;
+    font-weight: 300;
+  }
+
+  .hero-sub strong { color: var(--branco); font-weight: 500; }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--amarelo);
+    color: var(--preto);
+    font-family: var(--fonte-titulo);
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 18px 48px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-bottom: 16px;
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(245,200,66,0.35);
+  }
+
+  .cta-note {
+    font-size: 12px;
+    color: var(--cinza-claro);
+    letter-spacing: 0.05em;
+  }
+
+  /* SOCIAL PROOF */
+  .proof-bar {
+    background: var(--cinza);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 20px 24px;
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+
+  .proof-item {
+    text-align: center;
+  }
+
+  .proof-num {
+    font-family: var(--fonte-titulo);
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--amarelo);
+  }
+
+  .proof-label {
+    font-size: 12px;
+    color: var(--cinza-claro);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 80px 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  section.full { max-width: 100%; padding: 80px 0; }
+
+  .section-label {
+    font-family: var(--fonte-titulo);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--laranja);
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-family: var(--fonte-titulo);
+    font-size: clamp(30px, 4.5vw, 50px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+
+  h2 span { color: var(--amarelo); }
+
+  /* FOR WHO */
+  .for-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 40px;
+  }
+
+  .for-item {
+    background: var(--preto);
+    padding: 28px;
+    transition: background 0.2s;
+  }
+
+  .for-item:hover { background: var(--cinza); }
+
+  .for-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .for-title {
+    font-family: var(--fonte-titulo);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .for-desc {
+    font-size: 14px;
+    color: rgba(248,245,240,0.55);
+    line-height: 1.6;
+  }
+
+  /* WHAT YOU LEARN */
+  .modules {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .module-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 24px;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 6px;
+    background: var(--cinza);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .module-item:hover { border-color: rgba(245,200,66,0.2); }
+
+  .module-num {
+    font-family: var(--fonte-titulo);
+    font-size: 40px;
+    font-weight: 800;
+    color: rgba(245,200,66,0.15);
+    min-width: 56px;
+    line-height: 1;
+    margin-top: -4px;
+  }
+
+  .module-body {}
+
+  .module-title {
+    font-family: var(--fonte-titulo);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .module-topics {
+    font-size: 14px;
+    color: rgba(248,245,240,0.5);
+    line-height: 1.6;
+  }
+
+  /* BONUSES */
+  .bonuses {
+    background: var(--cinza);
+    border-radius: 12px;
+    padding: 40px;
+    margin-top: 40px;
+  }
+
+  .bonus-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .bonus-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    font-size: 15px;
+  }
+
+  .bonus-list li::before {
+    content: '✦';
+    color: var(--amarelo);
+    font-size: 12px;
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+
+  /* TESTIMONIALS */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  .testimonial {
+    background: var(--cinza);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 24px;
+  }
+
+  .testimonial-stars {
+    color: var(--amarelo);
+    font-size: 13px;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+
+  .testimonial-text {
+    font-size: 14px;
+    color: rgba(248,245,240,0.75);
+    line-height: 1.65;
+    margin-bottom: 16px;
+  }
+
+  .testimonial-author {
+    font-family: var(--fonte-titulo);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--amarelo);
+  }
+
+  .testimonial-role {
+    font-size: 12px;
+    color: var(--cinza-claro);
+  }
+
+  /* PRICING */
+  .pricing-wrapper {
+    background: linear-gradient(135deg, #1a1200 0%, #0a0a0a 50%);
+    border: 1px solid rgba(245,200,66,0.2);
+    border-radius: 16px;
+    padding: 48px;
+    text-align: center;
+    max-width: 520px;
+    margin: 40px auto 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pricing-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--laranja), var(--amarelo));
+  }
+
+  .price-old {
+    font-size: 16px;
+    color: var(--cinza-claro);
+    text-decoration: line-through;
+    margin-bottom: 8px;
+  }
+
+  .price-main {
+    font-family: var(--fonte-titulo);
+    font-size: clamp(52px, 8vw, 80px);
+    font-weight: 800;
+    color: var(--amarelo);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .price-prefix {
+    font-size: 24px;
+    vertical-align: super;
+    font-weight: 400;
+  }
+
+  .price-note {
+    font-size: 14px;
+    color: rgba(248,245,240,0.5);
+    margin-bottom: 32px;
+  }
+
+  .price-includes {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .price-includes li {
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+    color: rgba(248,245,240,0.75);
+  }
+
+  .price-includes li::before {
+    content: '✓';
+    color: var(--amarelo);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* GUARANTEE */
+  .guarantee {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 28px 32px;
+    margin-top: 40px;
+  }
+
+  .guarantee-icon {
+    font-size: 52px;
+    flex-shrink: 0;
+  }
+
+  .guarantee h3 {
+    font-family: var(--fonte-titulo);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .guarantee p {
+    font-size: 14px;
+    color: rgba(248,245,240,0.6);
+    line-height: 1.6;
+  }
+
+  /* FAQ */
+  .faq-list {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .faq-item {
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .faq-q {
+    padding: 20px 24px;
+    font-family: var(--fonte-titulo);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--cinza);
+    user-select: none;
+  }
+
+  .faq-q:hover { background: var(--cinza-medio); }
+
+  .faq-toggle {
+    color: var(--amarelo);
+    font-size: 20px;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  .faq-a {
+    display: none;
+    padding: 0 24px 20px;
+    background: var(--cinza);
+    font-size: 14px;
+    color: rgba(248,245,240,0.65);
+    line-height: 1.7;
+  }
+
+  .faq-item.open .faq-a { display: block; }
+  .faq-item.open .faq-toggle { transform: rotate(45deg); }
+
+  /* FOOTER CTA */
+  .final-cta {
+    text-align: center;
+    padding: 80px 24px 100px;
+    background: radial-gradient(ellipse 70% 50% at 50% 50%, #1a1200, var(--preto));
+  }
+
+  .final-cta h2 { margin-bottom: 16px; }
+
+  .final-cta p {
+    font-size: 18px;
+    color: rgba(248,245,240,0.55);
+    max-width: 540px;
+    margin: 0 auto 40px;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: rgba(255,255,255,0.06);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* RESPONSIVE */
+  @media(max-width: 600px) {
+    .proof-bar { gap: 24px; }
+    .bonuses { padding: 28px 20px; }
+    .pricing-wrapper { padding: 32px 24px; }
+    .guarantee { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero" style="max-width:100%; padding:80px 24px 60px;">
+  <div class="badge">e-book + guia prático completo</div>
+  <h1>Domine a<em>IA Visual</em></h1>
+  <p class="hero-sub">
+    Aprenda a criar <strong>imagens, animações e vídeos profissionais</strong> com inteligência artificial — mesmo começando do zero.
+  </p>
+  <a href="#comprar" class="cta-btn">Quero começar agora →</a>
+  <p class="cta-note">Acesso imediato • Garantia de 7 dias</p>
+</section>
+
+<!-- SOCIAL PROOF BAR -->
+<div class="proof-bar">
+  <div class="proof-item">
+    <div class="proof-num">209</div>
+    <div class="proof-label">Páginas de conteúdo</div>
+  </div>
+  <div class="proof-item">
+    <div class="proof-num">7</div>
+    <div class="proof-label">Capítulos completos</div>
+  </div>
+  <div class="proof-item">
+    <div class="proof-num">100%</div>
+    <div class="proof-label">Prático e aplicável</div>
+  </div>
+  <div class="proof-item">
+    <div class="proof-num">+10</div>
+    <div class="proof-label">Checklists profissionais</div>
+  </div>
+</div>
+
+<!-- PROBLEMA / PARA QUEM -->
+<section>
+  <p class="section-label">Este livro é para você</p>
+  <h2>Cansado de perder tempo com <span>tentativa e erro</span>?</h2>
+  <p style="color:rgba(248,245,240,0.6); max-width:640px; font-size:17px;">
+    A maioria das pessoas usa IA de forma aleatória: copia prompts prontos, depende da sorte e nunca entende realmente o que está fazendo. Este livro muda isso.
+  </p>
+  <div class="for-grid">
+    <div class="for-item">
+      <span class="for-icon">🎨</span>
+      <div class="for-title">Criadores de Conteúdo</div>
+      <div class="for-desc">Que querem produzir vídeos e imagens de qualidade sem depender de terceiros.</div>
+    </div>
+    <div class="for-item">
+      <span class="for-icon">📱</span>
+      <div class="for-title">Social Media</div>
+      <div class="for-desc">Que precisam de conteúdo visual consistente e chamativo em volume.</div>
+    </div>
+    <div class="for-item">
+      <span class="for-icon">🖌️</span>
+      <div class="for-title">Designers</div>
+      <div class="for-desc">Que querem usar IA como aliada sem abrir mão do controle criativo.</div>
+    </div>
+    <div class="for-item">
+      <span class="for-icon">🚀</span>
+      <div class="for-title">Empreendedores</div>
+      <div class="for-desc">Que precisam criar materiais visuais para seus negócios com agilidade.</div>
+    </div>
+    <div class="for-item">
+      <span class="for-icon">📹</span>
+      <div class="for-title">Editores de Vídeo</div>
+      <div class="for-desc">Que querem incorporar IA ao fluxo de produção e ganhar tempo.</div>
+    </div>
+    <div class="for-item">
+      <span class="for-icon">💡</span>
+      <div class="for-title">Iniciantes</div>
+      <div class="for-desc">Que nunca usaram IA mas querem aprender do jeito certo, com profundidade.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTEÚDO DO LIVRO -->
+<section>
+  <p class="section-label">O que você vai aprender</p>
+  <h2>Uma jornada completa do <span>zero ao profissional</span></h2>
+  <div class="modules">
+    <div class="module-item">
+      <div class="module-num">01</div>
+      <div class="module-body">
+        <div class="module-title">Fundamentos da IA Generativa</div>
+        <div class="module-topics">Como a IA realmente funciona • Por que ela erra e como corrigir • Tipos de geração (texto→imagem, imagem→vídeo)</div>
+      </div>
+    </div>
+    <div class="module-item">
+      <div class="module-num">02</div>
+      <div class="module-body">
+        <div class="module-title">Ecossistema de Ferramentas</div>
+        <div class="module-topics">Melhores ferramentas para imagem, vídeo e áudio • Como montar seu fluxo de criação sem gastar à toa</div>
+      </div>
+    </div>
+    <div class="module-item">
+      <div class="module-num">03</div>
+      <div class="module-body">
+        <div class="module-title">Engenharia de Prompts</div>
+        <div class="module-topics">Estrutura profissional de prompts • Controle de resultado • Prompts para cenas e narrativa • Prática guiada completa</div>
+      </div>
+    </div>
+    <div class="module-item">
+      <div class="module-num">04</div>
+      <div class="module-body">
+        <div class="module-title">Criação de Imagens Profissionais</div>
+        <div class="module-topics">O que faz uma imagem ser boa • Controle de estilo • Consistência de personagem • Correção e melhoria</div>
+      </div>
+    </div>
+    <div class="module-item">
+      <div class="module-num">05</div>
+      <div class="module-body">
+        <div class="module-title">Animação com IA</div>
+        <div class="module-topics">Como funciona a animação com IA • Tipos de movimento • Erros comuns e como evitar • Checklist de animação</div>
+      </div>
+    </div>
+    <div class="module-item">
+      <div class="module-num">06</div>
+      <div class="module-body">
+        <div class="module-title">Edição Final de Vídeos</div>
+        <div class="module-topics">Ritmo, sequência e sincronização • Texto na tela (hook, apoio e CTA) • Edição para redes sociais • Checklist de publicação</div>
+      </div>
+    </div>
+    <div class="module-item">
+      <div class="module-num">07</div>
+      <div class="module-body">
+        <div class="module-title">Distribuição e Crescimento</div>
+        <div class="module-topics">Escolha de plataformas • Posicionamento e linha editorial • Leitura de desempenho • Reaproveitamento e escala</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TESTEMUNHOS -->
+<section>
+  <p class="section-label">Quem já leu</p>
+  <h2>Resultados <span>reais</span></h2>
+  <div class="testimonials-grid">
+    <div class="testimonial">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"Finalmente entendi como a IA realmente funciona. Parei de copiar prompt dos outros e comecei a construir os meus. Em duas semanas estava produzindo vídeos que nunca imaginei conseguir."</p>
+      <div class="testimonial-author">Mariana S.</div>
+      <div class="testimonial-role">Social Media, São Paulo</div>
+    </div>
+    <div class="testimonial">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"O capítulo de Engenharia de Prompts por si só já vale o investimento. Mudou completamente a forma como me comunico com qualquer ferramenta de IA."</p>
+      <div class="testimonial-author">Ricardo A.</div>
+      <div class="testimonial-role">Designer Freelancer, Curitiba</div>
+    </div>
+    <div class="testimonial">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"Nunca tinha usado IA antes. O livro me guiou do zero de forma progressiva. Agora crio conteúdo para meu negócio sem precisar contratar ninguém."</p>
+      <div class="testimonial-author">Fernanda L.</div>
+      <div class="testimonial-role">Empreendedora, Belo Horizonte</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PREÇO -->
+<section id="comprar">
+  <p class="section-label">Investimento</p>
+  <h2>Comece hoje, <span>sem risco</span></h2>
+  <div class="pricing-wrapper">
+    <div class="price-old">De R$ 97,00</div>
+    <div class="price-main"><span class="price-prefix">R$</span>47</div>
+    <div class="price-note">ou em até 2x de R$ 24,50 sem juros</div>
+    <ul class="price-includes">
+      <li>E-book completo: Domine a IA Visual (209 páginas)</li>
+      <li>7 capítulos com práticas guiadas</li>
+      <li>Checklists profissionais para usar no dia a dia</li>
+      <li>Acesso imediato após a compra</li>
+      <li>Leitura em qualquer dispositivo</li>
+    </ul>
+    <a href="#" class="cta-btn" style="display:block; width:100%; text-align:center; padding:18px;">
+      Comprar agora por R$ 47
+    </a>
+    <p style="margin-top:16px; font-size:12px; color:var(--cinza-claro);">🔒 Compra segura • Pagamento via Hotmart</p>
+  </div>
+
+  <!-- GARANTIA -->
+  <div class="guarantee">
+    <div class="guarantee-icon">🛡️</div>
+    <div>
+      <h3>Garantia de 7 dias</h3>
+      <p>Se por qualquer motivo você não ficar satisfeito nos primeiros 7 dias após a compra, devolvemos 100% do seu dinheiro. Sem perguntas, sem burocracia.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<section>
+  <p class="section-label">Dúvidas frequentes</p>
+  <h2>Perguntas <span>respondidas</span></h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q">Preciso ter experiência com IA para aproveitar o livro? <span class="faq-toggle">+</span></div>
+      <div class="faq-a">Não. O livro foi escrito especialmente para quem está começando, mas com profundidade suficiente para quem já usa IA e quer organizar o processo e ter mais controle sobre os resultados.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Em qual formato o e-book é entregue? <span class="faq-toggle">+</span></div>
+      <div class="faq-a">O livro é entregue em PDF, compatível com qualquer dispositivo: celular, tablet, computador ou e-reader. O acesso é imediato após a confirmação do pagamento.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Precisa pagar por ferramentas de IA para aplicar o conteúdo? <span class="faq-toggle">+</span></div>
+      <div class="faq-a">O livro apresenta o ecossistema completo de ferramentas, incluindo opções gratuitas e pagas. Você pode começar sem gastar nada e decidir investir à medida que avança.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">O conteúdo fica desatualizado com o tempo? <span class="faq-toggle">+</span></div>
+      <div class="faq-a">O foco do livro é desenvolver raciocínio e método — não apenas ensinar ferramentas específicas. Por isso, o aprendizado permanece válido mesmo quando as ferramentas evoluem.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Consigo parcelar o pagamento? <span class="faq-toggle">+</span></div>
+      <div class="faq-a">Sim. A Hotmart aceita parcelamento em cartão de crédito em até 2x sem juros. Também são aceitos boleto bancário e Pix.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<div class="final-cta">
+  <h2>Pare de depender da <span>sorte</span></h2>
+  <p>Comece hoje a criar imagens, animações e vídeos com método, controle e consistência.</p>
+  <a href="#comprar" class="cta-btn">Quero o livro por R$ 47 →</a>
+  <p style="margin-top:16px; font-size:12px; color:var(--cinza-claro);">Garantia de 7 dias • Acesso imediato</p>
+</div>
+
+<script>
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+</script>
+
+</body>
+</html>
